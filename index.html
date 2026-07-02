@@ -252,33 +252,19 @@
     <div class="zona-resultado oculto" id="resultado">
       <hr class="divisor">
 
-      <div class="seccion-titulo">🖱️ Código seleccionable <span class="pill">se pega como número</span></div>
-      <div class="marco-barcode" id="marcoTexto" title="Haz clic para seleccionar">
+      <div class="seccion-titulo">📊 Código de barras <span class="pill">2 formas de copiar</span></div>
+      <div class="marco-barcode" id="marcoTexto" title="Haz clic para seleccionar el número">
         <span id="barcodeTexto"></span>
+        <img id="barcodeImg" alt="Código de barras del DNI" hidden>
       </div>
       <div class="fila-botones">
         <button class="btn btn-suave" onclick="copiarTexto()">📋 Copiar como texto</button>
-      </div>
-      <div class="hint">
-        <span>💡</span>
-        <span><b>Igual que en tu documento:</b> selecciona las barras (o haz un clic sobre ellas), cópialas con
-        <b>Ctrl+C</b> y al pegarlas en Word aparecerá el <b>número del DNI</b>.</span>
-      </div>
-
-      <hr class="divisor">
-
-      <div class="seccion-titulo">🖼️ Código como imagen <span class="pill">escaneable · Code 39</span></div>
-      <div class="marco-barcode">
-        <img id="barcodeImg" alt="Código de barras del DNI">
-      </div>
-      <div class="fila-botones">
-        <button class="btn btn-primario" id="btnCopiarImg" onclick="copiarImagen()">🖼️ Copiar imagen</button>
+        <button class="btn btn-primario" id="btnCopiarImg" onclick="copiarImagen()">🖼️ Copiar como código de barras</button>
         <button class="btn btn-borde" id="btnDescargar" onclick="descargarPng()">⬇️ Descargar PNG</button>
       </div>
       <div class="hint">
         <span>💡</span>
-        <span>La imagen se copia al portapapeles: pégala directo en <b>Word</b>, correo o WhatsApp.
-        También puedes hacer <b>clic derecho → Copiar imagen</b>.</span>
+        <span><b>Dos maneras de copiar:</b> «Copiar como texto» pega el <b>número</b> del DNI en Word (o selecciona las barras y usa <b>Ctrl+C</b>); «Copiar como código de barras» pega la <b>imagen</b> del código, lista para escanear.</span>
       </div>
     </div>
   </div>
