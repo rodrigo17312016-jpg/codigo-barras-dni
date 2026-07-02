@@ -145,7 +145,7 @@
   #barcodeTexto {
     font-family: 'Libre Barcode 39', monospace;
     font-size: clamp(40px, 12vw, 86px); line-height: 1; color: #000;
-    user-select: all; -webkit-user-select: all; cursor: text;
+    user-select: text; -webkit-user-select: text; cursor: text;
     display: inline-block; padding: 4px 2px; max-width: 100%;
     overflow-x: auto; white-space: nowrap;
   }
@@ -259,12 +259,13 @@
       </div>
       <div class="fila-botones">
         <button class="btn btn-suave" onclick="copiarTexto()">📋 Copiar como texto</button>
-        <button class="btn btn-primario" id="btnCopiarImg" onclick="copiarImagen()">🖼️ Copiar como código de barras</button>
+        <button class="btn btn-primario" onclick="copiarBarraFuente()">🔳 Copiar como código de barras</button>
+        <button class="btn btn-borde" id="btnCopiarImg" onclick="copiarImagen()">🖼️ Copiar como imagen</button>
         <button class="btn btn-borde" id="btnDescargar" onclick="descargarPng()">⬇️ Descargar PNG</button>
       </div>
       <div class="hint">
         <span>💡</span>
-        <span><b>Dos maneras de copiar:</b> «Copiar como texto» pega el <b>número</b> del DNI en Word (o selecciona las barras y usa <b>Ctrl+C</b>); «Copiar como código de barras» pega la <b>imagen</b> del código, lista para escanear.</span>
+        <span><b>3 maneras de copiar:</b> «texto» pega el <b>número</b>; «código de barras» pega las <b>barras como texto</b> (se ven como código si tu Word tiene la fuente de barras); «imagen» pega una <b>foto</b> del código (funciona siempre). También puedes <b>seleccionar solo una parte</b> de las barras y copiarla con <b>Ctrl+C</b>.</span>
       </div>
     </div>
   </div>
@@ -384,8 +385,9 @@
     generar(false);
   });
 
-  // clic en el barcode de fuente = seleccionarlo entero
-  $('marcoTexto').addEventListener('click', () => {
+  // doble clic en el barcode = seleccionarlo entero (un clic simple deja
+  // seleccionar solo una parte arrastrando)
+  $('marcoTexto').addEventListener('dblclick', () => {
     const nodo = $('barcodeTexto');
     const sel = window.getSelection();
     const rango = document.createRange();
@@ -431,6 +433,29 @@
       guardarHistorial(dniActual);
     } catch (e) {
       toast('Tu navegador bloqueó la copia. Usa clic derecho → Copiar imagen', 'mal');
+    }
+  }
+
+  // Copia las barras como TEXTO con la fuente de código de barras (Code 39 con
+  // delimitadores *…*). Al pegar en Word, si tiene una fuente de barras
+  // instalada, se ve como código de barras (y sigue siendo texto editable).
+  async function copiarBarraFuente() {
+    if (!dniActual) return;
+    const valor = '*' + dniActual + '*';
+    const html = '<span style="font-family:\'Libre Barcode 39\',\'LibreBarcode39\',\'Code 39\',\'Free 3 of 9\',\'IDAutomationHC39M\',monospace;font-size:36pt;white-space:nowrap;">' + valor + '</span>';
+    try {
+      if (typeof ClipboardItem !== 'undefined' && navigator.clipboard && navigator.clipboard.write) {
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([html], { type: 'text/html' }),
+          'text/plain': new Blob([dniActual], { type: 'text/plain' })
+        })]);
+      } else {
+        await navigator.clipboard.writeText(valor);
+      }
+      toast('✔ Barras copiadas · pégalas en Word (si tiene fuente de barras se ven como código)', 'ok');
+      guardarHistorial(dniActual);
+    } catch (e) {
+      toast('No se pudo copiar. Prueba «Copiar como imagen».', 'mal');
     }
   }
 
