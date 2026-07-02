@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Código de Barras DNI · Generador</title>
+<meta name="description" content="Generador de código de barras para DNI. Copia como imagen o como texto, igual que en los documentos oficiales.">
+<meta property="og:title" content="Generador de Código de Barras — DNI">
+<meta property="og:description" content="Escribe un DNI y obtén su código de barras. Cópialo como imagen o como texto, igual que en los documentos oficiales.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📇</text></svg>">
+<script src="vendor/JsBarcode.all.min.js"></script>
+<style>
+  @font-face {
+    font-family: 'Libre Barcode 39';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(data:font/woff2;base64,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) format('woff2');
+  }
+
+  :root {
+    --azul: #0b6fb4;
+    --azul-osc: #084f80;
+    --celeste: #e8f4fc;
+    --tinta: #1c2733;
+    --gris: #5b6b7b;
+    --borde: #d7e3ee;
+    --fondo: #f2f7fb;
+    --blanco: #ffffff;
+    --verde: #1a9e58;
+    --verde-texto: #0e7a43;
+    --rojo: #c23a3a;
+    --sombra: 0 10px 30px rgba(8, 79, 128, .10), 0 2px 8px rgba(8, 79, 128, .06);
+    --radio: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(1100px 500px at 85% -10%, #d8ecf9 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #e3f1fa 0%, transparent 55%),
+      var(--fondo);
+    color: var(--tinta);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 16px 48px;
+  }
+
+  header { text-align: center; margin-bottom: 26px; }
+  .logo-band {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, var(--azul), var(--azul-osc));
+    color: #fff; padding: 10px 22px; border-radius: 999px;
+    box-shadow: var(--sombra); font-weight: 600; font-size: 15px; letter-spacing: .3px;
+  }
+  .logo-band .ico { font-size: 20px; }
+  h1 { font-size: clamp(22px, 4vw, 32px); margin-top: 16px; color: var(--azul-osc); font-weight: 700; }
+  .sub { color: var(--gris); margin-top: 6px; font-size: 14.5px; }
+
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 18px;
+    background: #e3edf6; padding: 5px; border-radius: 12px;
+  }
+  .tab-btn {
+    border: 0; background: transparent; padding: 9px 22px; border-radius: 9px;
+    font-size: 14px; font-weight: 600; color: var(--gris); cursor: pointer;
+    transition: all .18s ease; font-family: inherit;
+  }
+  .tab-btn.activo { background: var(--blanco); color: var(--azul-osc); box-shadow: 0 2px 6px rgba(8,79,128,.12); }
+
+  .panel { width: 100%; max-width: 720px; }
+  .oculto { display: none !important; }
+
+  .card {
+    background: var(--blanco); border: 1px solid var(--borde);
+    border-radius: var(--radio); box-shadow: var(--sombra);
+    padding: 26px 28px; margin-bottom: 18px;
+  }
+
+  label.campo { display: block; font-size: 13px; font-weight: 600; color: var(--gris); margin-bottom: 8px; letter-spacing: .4px; text-transform: uppercase; }
+
+  .fila-input { display: flex; gap: 10px; }
+  input#dni {
+    flex: 1; font-size: 26px; font-weight: 600; letter-spacing: 4px;
+    padding: 12px 18px; border: 2px solid var(--borde); border-radius: 12px;
+    color: var(--tinta); font-family: inherit; font-variant-numeric: tabular-nums;
+    transition: border-color .18s ease, box-shadow .18s ease;
+    min-width: 0;
+  }
+  input#dni:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 4px rgba(11,111,180,.14); }
+  input#dni::placeholder { color: #b9c7d4; letter-spacing: 2px; font-weight: 400; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: 0; border-radius: 12px; padding: 12px 20px;
+    font-size: 14.5px; font-weight: 600; font-family: inherit; cursor: pointer;
+    transition: transform .12s ease, box-shadow .18s ease, background .18s ease;
+    white-space: nowrap;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primario { background: linear-gradient(135deg, var(--azul), var(--azul-osc)); color: #fff; box-shadow: 0 4px 14px rgba(11,111,180,.35); }
+  .btn-primario:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(11,111,180,.45); }
+  .btn-suave { background: var(--celeste); color: var(--azul-osc); }
+  .btn-suave:hover:not(:disabled) { background: #d9ecf9; }
+  .btn-borde { background: var(--blanco); color: var(--azul-osc); border: 1.5px solid var(--borde); }
+  .btn-borde:hover:not(:disabled) { border-color: var(--azul); }
+
+  /* Foco visible propio para todos los controles */
+  .tab-btn:focus-visible, .btn:focus-visible, .chip:focus-visible {
+    outline: 3px solid var(--azul); outline-offset: 2px;
+  }
+
+  .aviso { font-size: 13px; color: var(--gris); margin-top: 10px; min-height: 18px; }
+  .aviso.error { color: var(--rojo); }
+
+  .zona-resultado { margin-top: 4px; }
+
+  .seccion-titulo {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: var(--azul-osc);
+    text-transform: uppercase; letter-spacing: .6px; margin-bottom: 12px;
+  }
+  .seccion-titulo .pill {
+    background: var(--celeste); color: var(--azul-osc);
+    font-size: 11px; padding: 3px 10px; border-radius: 999px;
+    text-transform: none; letter-spacing: 0; font-weight: 600;
+  }
+
+  .marco-barcode {
+    background: #fff;
+    border: 1.5px dashed var(--borde); border-radius: 14px;
+    padding: 22px 16px 16px; text-align: center;
+    transition: border-color .2s ease;
+  }
+  .marco-barcode:hover { border-color: var(--azul); }
+
+  /* Código de barras seleccionable (fuente). Los asteriscos de inicio/fin
+     van en pseudo-elementos: se VEN pero NO se copian al seleccionar. */
+  #barcodeTexto {
+    font-family: 'Libre Barcode 39', monospace;
+    font-size: clamp(40px, 12vw, 86px); line-height: 1; color: #000;
+    user-select: all; -webkit-user-select: all; cursor: text;
+    display: inline-block; padding: 4px 2px; max-width: 100%;
+    overflow-x: auto; white-space: nowrap;
+  }
+  #barcodeTexto::before, #barcodeTexto::after { content: '*'; user-select: none; -webkit-user-select: none; }
+  #barcodeTexto::selection { background: rgba(26,158,88,.25); }
+
+  .num-humano { font-size: 15px; letter-spacing: 6px; color: var(--tinta); font-weight: 600; margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+  #barcodeImg { max-width: 100%; height: auto; display: inline-block; }
+
+  .fila-botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; justify-content: center; }
+
+  .divisor { border: 0; border-top: 1px solid var(--borde); margin: 24px 0; }
+
+  .hint {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--celeste); border-radius: 12px; padding: 12px 14px;
+    font-size: 13px; color: var(--azul-osc); margin-top: 14px; text-align: left;
+  }
+  .hint b { font-weight: 700; }
+
+  .historial { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    background: var(--blanco); border: 1.5px solid var(--borde); border-radius: 999px;
+    padding: 6px 14px; font-size: 13.5px; font-weight: 600; color: var(--tinta);
+    cursor: pointer; transition: all .15s ease; font-variant-numeric: tabular-nums; font-family: inherit;
+  }
+  .chip:hover { border-color: var(--azul); color: var(--azul-osc); background: var(--celeste); }
+  .chip-x { margin-left: 6px; color: #b9c7d4; font-weight: 700; }
+  .chip:hover .chip-x { color: var(--rojo); }
+
+  /* ---- Lote ---- */
+  textarea#listaDnis {
+    width: 100%; min-height: 140px; resize: vertical;
+    font-size: 17px; letter-spacing: 2px; font-family: Consolas, monospace;
+    padding: 14px 16px; border: 2px solid var(--borde); border-radius: 12px; color: var(--tinta);
+  }
+  textarea#listaDnis:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 4px rgba(11,111,180,.14); }
+
+  .grilla-lote {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .tarjeta-lote {
+    border: 1.5px solid var(--borde); border-radius: 12px;
+    padding: 14px 10px 10px; text-align: center; background: #fff;
+    break-inside: avoid;
+  }
+  .tarjeta-lote img { max-width: 100%; height: auto; }
+  .tarjeta-lote .n { font-size: 13px; letter-spacing: 4px; font-weight: 600; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  /* ---- Toast ---- */
+  #toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--tinta); color: #fff; padding: 12px 22px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease; z-index: 99;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25); max-width: 90vw; text-align: center;
+  }
+  #toast.ver { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast.ok { background: var(--verde); }
+  #toast.mal { background: var(--rojo); }
+
+  footer { margin-top: 26px; font-size: 12.5px; color: var(--gris); text-align: center; }
+
+  @media (max-width: 560px) {
+    .card { padding: 20px 16px; }
+    .fila-input { flex-direction: column; }
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    header, .tabs, .card.no-print, footer, #toast, .fila-botones { display: none !important; }
+    .hint, .aviso, .seccion-titulo .pill, .fila-input, label.campo { display: none !important; }
+    .marco-barcode { border: 0; padding: 8px 0; }
+    .panel, .card { box-shadow: none; border: 0; max-width: 100%; }
+    .grilla-lote { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-band"><span class="ico">📇</span> AGROINDUSTRIAL E&amp;C</div>
+  <h1>Generador de Código de Barras — DNI</h1>
+  <p class="sub">Escribe el DNI y obtén su código de barras al instante · Cópialo como imagen o como texto</p>
+</header>
+
+<div class="tabs" role="tablist" aria-label="Modo de generación">
+  <button class="tab-btn activo" id="tabUno" role="tab" aria-selected="true" aria-controls="panelUno" onclick="cambiarTab('uno')">Individual</button>
+  <button class="tab-btn" id="tabLote" role="tab" aria-selected="false" aria-controls="panelLote" tabindex="-1" onclick="cambiarTab('lote')">Lote / Imprimir</button>
+</div>
+
+<!-- ============ PANEL INDIVIDUAL ============ -->
+<div class="panel" id="panelUno" role="tabpanel" aria-labelledby="tabUno">
+  <div class="card">
+    <label class="campo" for="dni">Número de DNI</label>
+    <div class="fila-input">
+      <input id="dni" type="text" inputmode="numeric" autocomplete="off" spellcheck="false"
+             placeholder="Ej. 73268107" aria-label="Número de DNI">
+      <button class="btn btn-primario" onclick="generar(true)">⚡ Generar</button>
+    </div>
+    <div class="aviso" id="aviso"></div>
+
+    <div class="zona-resultado oculto" id="resultado">
+      <hr class="divisor">
+
+      <div class="seccion-titulo">🖱️ Código seleccionable <span class="pill">se pega como número</span></div>
+      <div class="marco-barcode" id="marcoTexto" title="Haz clic para seleccionar">
+        <span id="barcodeTexto"></span>
+        <div class="num-humano" id="numHumano1"></div>
+      </div>
+      <div class="fila-botones">
+        <button class="btn btn-suave" onclick="copiarTexto()">📋 Copiar como texto</button>
+      </div>
+      <div class="hint">
+        <span>💡</span>
+        <span><b>Igual que en tu documento:</b> selecciona las barras (o haz un clic sobre ellas), cópialas con
+        <b>Ctrl+C</b> y al pegarlas en Word aparecerá el <b>número del DNI</b>.</span>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="seccion-titulo">🖼️ Código como imagen <span class="pill">escaneable · Code 39</span></div>
+      <div class="marco-barcode">
+        <img id="barcodeImg" alt="Código de barras del DNI">
+      </div>
+      <div class="fila-botones">
+        <button class="btn btn-primario" id="btnCopiarImg" onclick="copiarImagen()">🖼️ Copiar imagen</button>
+        <button class="btn btn-borde" id="btnDescargar" onclick="descargarPng()">⬇️ Descargar PNG</button>
+      </div>
+      <div class="hint">
+        <span>💡</span>
+        <span>La imagen se copia al portapapeles: pégala directo en <b>Word</b>, correo o WhatsApp.
+        También puedes hacer <b>clic derecho → Copiar imagen</b>.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card no-print" id="cardHistorial" style="display:none">
+    <div class="seccion-titulo">🕘 Recientes</div>
+    <div class="historial" id="historial"></div>
+  </div>
+</div>
+
+<!-- ============ PANEL LOTE ============ -->
+<div class="panel oculto" id="panelLote" role="tabpanel" aria-labelledby="tabLote">
+  <div class="card no-print">
+    <label class="campo" for="listaDnis">Varios DNI (uno por línea)</label>
+    <textarea id="listaDnis" placeholder="73268107&#10;76825463&#10;45871236"></textarea>
+    <div class="fila-botones" style="justify-content:flex-start">
+      <button class="btn btn-primario" id="btnGenLote" onclick="generarLote()">⚡ Generar todos</button>
+      <button class="btn btn-borde" onclick="imprimirLote()">🖨️ Imprimir hoja</button>
+    </div>
+    <div class="aviso" id="avisoLote"></div>
+  </div>
+  <div class="card oculto" id="cardGrilla">
+    <div class="grilla-lote" id="grillaLote"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<footer>Código de barras <b>Code 39</b> · Funciona sin conexión · Hecho con ❤️ para agilizar tu trabajo</footer>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const inputDni = $('dni');
+  let dniActual = '';
+  let toastTimer = null;
+  const JSBARCODE_OK = typeof JsBarcode !== 'undefined';
+
+  // ---------- utilidades ----------
+  function toast(msg, tipo) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.className = 'ver ' + (tipo || '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.className = '', 2600);
+  }
+
+  function limpiar(v) { return (v || '').replace(/\D+/g, '').slice(0, 9); }
+
+  // ---------- generación ----------
+  function generar(guardarHist) {
+    const v = limpiar(inputDni.value);
+    if (inputDni.value !== v) inputDni.value = v;
+
+    const aviso = $('aviso');
+    aviso.style.color = '';
+    if (!v) {
+      $('resultado').classList.add('oculto');
+      dniActual = '';
+      if (guardarHist) {
+        aviso.textContent = 'Escribe un número de DNI para generar.';
+        aviso.className = 'aviso error';
+        inputDni.focus();
+      } else {
+        aviso.textContent = '';
+        aviso.className = 'aviso';
+      }
+      return;
+    }
+
+    dniActual = v;
+    $('resultado').classList.remove('oculto');
+
+    if (v.length === 8) {
+      aviso.textContent = '✔ DNI de 8 dígitos';
+      aviso.className = 'aviso';
+      aviso.style.color = 'var(--verde-texto)';
+    } else {
+      aviso.textContent = 'ℹ El DNI peruano estándar tiene 8 dígitos (tienes ' + v.length + '). Se genera igual.';
+      aviso.className = 'aviso';
+    }
+
+    // 1) versión seleccionable (fuente)
+    $('barcodeTexto').textContent = v;
+    $('numHumano1').textContent = v;
+
+    // 2) versión imagen (JsBarcode → canvas → img)
+    if (!JSBARCODE_OK) {
+      if (guardarHist) guardarHistorial(v);
+      return;
+    }
+    try {
+      const canvas = document.createElement('canvas');
+      JsBarcode(canvas, v, {
+        format: 'CODE39',
+        width: 3,
+        height: 110,
+        margin: 18,
+        displayValue: true,
+        font: 'Segoe UI',
+        fontSize: 26,
+        textMargin: 8,
+        background: '#ffffff',
+        lineColor: '#000000'
+      });
+      window._canvasActual = canvas;
+      $('barcodeImg').src = canvas.toDataURL('image/png');
+    } catch (e) {
+      toast('No se pudo generar la imagen (revisa vendor/JsBarcode.all.min.js). El código seleccionable de arriba sí funciona.', 'mal');
+    }
+
+    if (guardarHist) guardarHistorial(v);
+  }
+
+  inputDni.addEventListener('input', () => generar(false));
+  inputDni.addEventListener('keydown', e => { if (e.key === 'Enter') generar(true); });
+  // Interceptar pegado: limpia ANTES de que el navegador recorte por longitud
+  inputDni.addEventListener('paste', e => {
+    e.preventDefault();
+    const pegado = (e.clipboardData || window.clipboardData).getData('text');
+    inputDni.value = limpiar(pegado);
+    generar(false);
+  });
+
+  // clic en el barcode de fuente = seleccionarlo entero
+  $('marcoTexto').addEventListener('click', () => {
+    const nodo = $('barcodeTexto');
+    const sel = window.getSelection();
+    const rango = document.createRange();
+    rango.selectNodeContents(nodo);
+    sel.removeAllRanges();
+    sel.addRange(rango);
+  });
+
+  // ---------- copiar ----------
+  async function copiarTexto() {
+    if (!dniActual) return;
+    try {
+      await navigator.clipboard.writeText(dniActual);
+      toast('✔ Número ' + dniActual + ' copiado como texto', 'ok');
+    } catch (e) {
+      // fallback clásico
+      const ta = document.createElement('textarea');
+      ta.value = dniActual;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); toast('✔ Número copiado', 'ok'); }
+      catch (e2) { toast('No se pudo copiar', 'mal'); }
+      ta.remove();
+    }
+    guardarHistorial(dniActual);
+  }
+
+  async function copiarImagen() {
+    if (!dniActual || !window._canvasActual) return;
+    if (typeof ClipboardItem === 'undefined' || !navigator.clipboard || !navigator.clipboard.write) {
+      toast('Tu navegador no soporta copiar imágenes. Usa clic derecho → Copiar imagen', 'mal');
+      return;
+    }
+    try {
+      // La promesa del blob va DENTRO del ClipboardItem: write() se invoca
+      // síncronamente en el gesto (Safari/WebKit lo exige).
+      const item = new ClipboardItem({
+        'image/png': new Promise((res, rej) =>
+          window._canvasActual.toBlob(b => b ? res(b) : rej(new Error('sin blob')), 'image/png'))
+      });
+      await navigator.clipboard.write([item]);
+      toast('✔ Imagen copiada · pégala en Word con Ctrl+V', 'ok');
+      guardarHistorial(dniActual);
+    } catch (e) {
+      toast('Tu navegador bloqueó la copia. Usa clic derecho → Copiar imagen', 'mal');
+    }
+  }
+
+  function descargarPng() {
+    if (!dniActual || !window._canvasActual) return;
+    const a = document.createElement('a');
+    a.download = 'dni_' + dniActual + '_barcode.png';
+    a.href = window._canvasActual.toDataURL('image/png');
+    a.click();
+    toast('✔ PNG descargado', 'ok');
+    guardarHistorial(dniActual);
+  }
+
+  // ---------- historial ----------
+  const HKEY = 'dni_barcode_historial';
+  function leerHistorial() {
+    try {
+      const h = JSON.parse(localStorage.getItem(HKEY));
+      return Array.isArray(h) ? h.filter(x => typeof x === 'string' && /^\d{1,9}$/.test(x)).slice(0, 12) : [];
+    } catch (e) { return []; }
+  }
+  function escribirHistorial(h) {
+    try { localStorage.setItem(HKEY, JSON.stringify(h)); }
+    catch (e) { /* almacenamiento bloqueado: la app sigue sin historial */ }
+  }
+  function guardarHistorial(v) {
+    if (!v) return;
+    let h = leerHistorial().filter(x => x !== v);
+    h.unshift(v);
+    h = h.slice(0, 12);
+    escribirHistorial(h);
+    pintarHistorial();
+  }
+  function borrarDeHistorial(v, ev) {
+    ev.stopPropagation();
+    const h = leerHistorial().filter(x => x !== v);
+    escribirHistorial(h);
+    pintarHistorial();
+  }
+  function pintarHistorial() {
+    const h = leerHistorial();
+    $('cardHistorial').style.display = h.length ? '' : 'none';
+    const cont = $('historial');
+    cont.innerHTML = '';
+    h.forEach(v => {
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.append(v); // texto seguro, sin innerHTML
+      const x = document.createElement('span');
+      x.className = 'chip-x';
+      x.title = 'Quitar';
+      x.setAttribute('aria-hidden', 'true');
+      x.textContent = '✕';
+      b.appendChild(x);
+      b.setAttribute('aria-label', 'DNI ' + v + ' — Enter para cargar, Supr para quitar');
+      b.onclick = ev => {
+        if (ev.target.classList.contains('chip-x')) { borrarDeHistorial(v, ev); return; }
+        inputDni.value = v;
+        cambiarTab('uno');
+        generar(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      b.addEventListener('keydown', ev => {
+        if (ev.key === 'Delete' || ev.key === 'Backspace') borrarDeHistorial(v, ev);
+      });
+      cont.appendChild(b);
+    });
+  }
+
+  // ---------- tabs ----------
+  function cambiarTab(cual) {
+    const uno = cual === 'uno';
+    $('panelUno').classList.toggle('oculto', !uno);
+    $('panelLote').classList.toggle('oculto', uno);
+    $('tabUno').classList.toggle('activo', uno);
+    $('tabLote').classList.toggle('activo', !uno);
+    $('tabUno').setAttribute('aria-selected', uno);
+    $('tabLote').setAttribute('aria-selected', !uno);
+    $('tabUno').tabIndex = uno ? 0 : -1;
+    $('tabLote').tabIndex = uno ? -1 : 0;
+  }
+  document.querySelector('.tabs').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const aLote = e.target === $('tabUno');
+    cambiarTab(aLote ? 'lote' : 'uno');
+    (aLote ? $('tabLote') : $('tabUno')).focus();
+  });
+
+  // ---------- lote ----------
+  function generarLote() {
+    if (!JSBARCODE_OK) {
+      const a = $('avisoLote');
+      a.textContent = 'No se pudo cargar el generador de imágenes (vendor/JsBarcode.all.min.js).';
+      a.className = 'aviso error';
+      return;
+    }
+    const avisoL = $('avisoLote');
+    const rechazadas = [];
+    const validas = [];
+    $('listaDnis').value.split(/\r?\n/).forEach((linea, i) => {
+      const grupos = linea.match(/\d+/g);
+      if (!grupos) return; // línea sin dígitos: se ignora en silencio
+      if (grupos.length > 1 || grupos[0].length > 9) {
+        rechazadas.push('línea ' + (i + 1) + ': "' + linea.trim().slice(0, 30) + '"');
+      } else {
+        validas.push(grupos[0]);
+      }
+    });
+    const unicos = [...new Set(validas)];
+
+    const grilla = $('grillaLote');
+    grilla.innerHTML = '';
+    $('cardGrilla').classList.toggle('oculto', !unicos.length);
+
+    if (!unicos.length) {
+      avisoL.className = 'aviso error';
+      avisoL.textContent = rechazadas.length
+        ? '⚠ Ninguna línea válida. ' + rechazadas.length + ' línea(s) ignorada(s) por tener más de un número o demasiados dígitos.'
+        : 'Escribe al menos un DNI (uno por línea).';
+      return;
+    }
+
+    let ok = 0;
+    unicos.forEach(v => {
+      try {
+        const canvas = document.createElement('canvas');
+        JsBarcode(canvas, v, {
+          format: 'CODE39', width: 2, height: 70, margin: 12,
+          displayValue: true, fontSize: 18, textMargin: 6,
+          background: '#ffffff', lineColor: '#000000'
+        });
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'tarjeta-lote';
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL('image/png');
+        img.alt = 'Código de barras ' + v;
+        tarjeta.appendChild(img);
+        grilla.appendChild(tarjeta);
+        ok++;
+      } catch (e) { /* no debería ocurrir: v es solo dígitos */ }
+    });
+
+    if (ok === 0) {
+      avisoL.className = 'aviso error';
+      avisoL.textContent = 'No se pudo generar ningún código (falta vendor/JsBarcode.all.min.js).';
+      $('cardGrilla').classList.add('oculto');
+      return;
+    }
+
+    const repetidos = validas.length !== unicos.length;
+    let msg = '✔ ' + ok + ' código' + (ok > 1 ? 's' : '') + ' generado' + (ok > 1 ? 's' : '');
+    const extras = [];
+    if (repetidos) extras.push('se quitaron repetidos');
+    if (rechazadas.length) extras.push(rechazadas.length + ' línea(s) ignorada(s)');
+    if (extras.length) msg += ' (' + extras.join(' · ') + ')';
+    avisoL.className = rechazadas.length ? 'aviso error' : 'aviso';
+    if (!rechazadas.length) avisoL.style.color = 'var(--verde-texto)';
+    else avisoL.style.color = '';
+    avisoL.textContent = msg;
+  }
+
+  function imprimirLote() {
+    if (!$('grillaLote').children.length) {
+      toast('Primero genera los códigos con ⚡ Generar todos', 'mal');
+      return;
+    }
+    window.print();
+  }
+
+  // ---------- arranque ----------
+  if (!JSBARCODE_OK) {
+    const a = $('aviso');
+    a.textContent = '⚠ No se pudo cargar el generador de imágenes (vendor/JsBarcode.all.min.js). El código seleccionable por fuente sigue funcionando; la copia/descarga de imagen y el lote no están disponibles.';
+    a.className = 'aviso error';
+    ['btnCopiarImg', 'btnDescargar', 'btnGenLote'].forEach(id => { const b = $(id); if (b) b.disabled = true; });
+  }
+  pintarHistorial();
+  inputDni.focus();
+</script>
+</body>
+</html>
