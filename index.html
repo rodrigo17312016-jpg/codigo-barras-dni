@@ -152,7 +152,6 @@
   #barcodeTexto::before, #barcodeTexto::after { content: '*'; user-select: none; -webkit-user-select: none; }
   #barcodeTexto::selection { background: rgba(26,158,88,.25); }
 
-  .num-humano { font-size: 15px; letter-spacing: 6px; color: var(--tinta); font-weight: 600; margin-top: 4px; font-variant-numeric: tabular-nums; }
 
   #barcodeImg { max-width: 100%; height: auto; display: inline-block; }
 
@@ -256,7 +255,6 @@
       <div class="seccion-titulo">🖱️ Código seleccionable <span class="pill">se pega como número</span></div>
       <div class="marco-barcode" id="marcoTexto" title="Haz clic para seleccionar">
         <span id="barcodeTexto"></span>
-        <div class="num-humano" id="numHumano1"></div>
       </div>
       <div class="fila-botones">
         <button class="btn btn-suave" onclick="copiarTexto()">📋 Copiar como texto</button>
@@ -362,9 +360,8 @@
       aviso.className = 'aviso';
     }
 
-    // 1) versión seleccionable (fuente)
+    // 1) versión seleccionable (fuente) — solo barras, sin número legible
     $('barcodeTexto').textContent = v;
-    $('numHumano1').textContent = v;
 
     // 2) versión imagen (JsBarcode → canvas → img)
     if (!JSBARCODE_OK) {
@@ -378,10 +375,7 @@
         width: 3,
         height: 110,
         margin: 18,
-        displayValue: true,
-        font: 'Segoe UI',
-        fontSize: 26,
-        textMargin: 8,
+        displayValue: false,
         background: '#ffffff',
         lineColor: '#000000'
       });
@@ -579,7 +573,7 @@
         const canvas = document.createElement('canvas');
         JsBarcode(canvas, v, {
           format: 'CODE39', width: 2, height: 70, margin: 12,
-          displayValue: true, fontSize: 18, textMargin: 6,
+          displayValue: false,
           background: '#ffffff', lineColor: '#000000'
         });
         const tarjeta = document.createElement('div');
